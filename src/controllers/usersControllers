@@ -1,0 +1,31 @@
+const User = require('../models/UserModel');
+
+const getUsers = async (req, res) => {
+  const users = await User.find()
+  console.log(users);
+  res.status(200).json(users);
+};
+
+const createUser = async (req, res) => {
+  try {
+    const user = new User({
+    nombre: req.body.nombre,
+    email: req.body.email,
+    password: req.body.password,
+    role: req.body.role
+    });
+    console.log(user);
+    await user.save();
+    res.status(201).json(user);
+  }catch (error) {
+    console.error(error);
+    res.status(500).json('Error al guardar el usuario');
+  }
+}
+
+
+
+module.exports = {
+  getUsers,
+  createUser
+}
