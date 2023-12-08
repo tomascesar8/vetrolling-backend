@@ -6,6 +6,11 @@ import './database/db';
 import usersRoutes from './routes/usersRoutes';
 import connectDB from './database/db';
 import petsRoutes from './routes/petsRoutes';
+import planesRoutes from './routes/planesRoutes';
+import servicesRoutes from './routes/servicesRoutes';
+import productsRoutes from './routes/productsRoutes';
+import commentsRoutes from './routes/commentsRoutes';
+import aboutUsRoutes from './routes/aboutUsRoutes';
 
 const app = express(); //para ver el servidor
 app.use(express.json());
@@ -33,6 +38,12 @@ app.listen(app.get('PORT'), () => { //para ver el puerto
 
 app.use('/users', usersRoutes); //para que el servidor use la ruta
 app.use('/pets', petsRoutes ); //para que el servidor use la ruta
+app.use('/planes', planesRoutes)
+app.use('/services', servicesRoutes)
+app.use('/products', productsRoutes)
+app.use('/comments', commentsRoutes)
+app.use('/about-us', aboutUsRoutes)
+
 
 // app.use('/api/pets', petRoutes);
 // app.use('/api/appointments', appointmentRoutes);

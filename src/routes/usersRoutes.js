@@ -1,11 +1,14 @@
 import { Router } from 'express';
 import { getUsers } from '../controllers/usersControllers';
 import { createUser } from '../controllers/usersControllers';
+import { getUsersByTomsom } from '../controllers/usersControllers';
 
 const router = Router();
 
 router.get('/', getUsers);
+router.get('/tomson', getUsersByTomsom);
 router.post('/', createUser);
+
 
 // router.post('/', (req, res) => {
 //   console.log('POST por console');

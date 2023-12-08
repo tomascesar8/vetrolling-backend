@@ -23,4 +23,4 @@ const TurnoSchema = new Schema({
 //   ref: 'Veterinario'
 // }
 
-mo
+module.exports = model('Turno', TurnoSchema);
