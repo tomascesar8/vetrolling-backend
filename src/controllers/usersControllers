@@ -2,7 +2,7 @@ const User = require('../models/UserModel');
 
 const getUsers = async (req, res) => {
   try{
-    const users = await User.find()
+    const users = await User.find().populate('pets');
     console.log(users);
     res.status(200).json(users);
   } catch(error){
@@ -11,39 +11,44 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUsersByTomsom = async (req, res) => {
-  try{  
-    const users = await User.find({nombre:"tomse"})
-    console.log(users);
-    res.status(200).json(users);
-  }catch(error){
-    console.log(error)
-    res.status(500).json('Error al buscar tomson');
-  }
-};
-
-
 const createUser = async (req, res) => {
   try {
-    const user = new User({
-    nombre: req.body.nombre,
-    email: req.body.email,
-    password: req.body.password,
-    role: req.body.role
-    });
+    const user = new User(req.body);
     console.log(user);
     await user.save();
-    res.status(201).json(user);
+    res.status(201).json({message: 'Usuario creado exitosamente', user});
   }catch (error) {
     console.error(error);
     res.status(500).json('Error al guardar el usuario');
   }
 }
 
+const updateUser = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const user = await User.findByIdAndUpdate(_id, req.body, {new: true});
+    console.log(user);
+    res.status(200).json({ message: 'Usuario actualizado exitosamente', user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Error al actualizar el usuario');
+  }
+}
 
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.body._id);
+    console.log(user);
+    res.status(200).json({message: 'Usuario eliminado exitosamente', user});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Error al eliminar el usuario');
+  }
+}
 
 module.exports = {
   getUsers,
   createUser,
-  getUsersByTomsom
+  updateUser,
+  deleteUser
 }

@@ -14,22 +14,25 @@ const UserSchema = new Schema({
     trim: true,
     minlength: 3,
     maxlength: 50,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     trim: true,
     lowercase: true,
-    required: true // Add the required property
+    required: true, // Add the required property
   },
   password: {
     type: String,
-    required: true // Add the required property
+    required: true, // Add the required property
+    minlength: 3,
+    maxlength: 50,
+    trim: true,
   },
-  pets: [{
-    type: Schema.Types.ObjectId,
+  pets: {
+    type: [Schema.Types.ObjectId],
     ref: 'Pet'
-  }],
+  },
 });
 
 module.exports = model('User', UserSchema);

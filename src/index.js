@@ -11,6 +11,7 @@ import servicesRoutes from './routes/servicesRoutes';
 import productsRoutes from './routes/productsRoutes';
 import commentsRoutes from './routes/commentsRoutes';
 import aboutUsRoutes from './routes/aboutUsRoutes';
+import veterinariansRoutes from './routes/veterinariansRoutes';
 
 const app = express(); //para ver el servidor
 app.use(express.json());
@@ -43,7 +44,7 @@ app.use('/services', servicesRoutes)
 app.use('/products', productsRoutes)
 app.use('/comments', commentsRoutes)
 app.use('/about-us', aboutUsRoutes)
-
+app.use('/veterinarians', veterinariansRoutes)
 
 // app.use('/api/pets', petRoutes);
 // app.use('/api/appointments', appointmentRoutes);

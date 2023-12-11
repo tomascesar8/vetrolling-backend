@@ -13,4 +13,4 @@ const VeterinarianSchema = new Schema({
 //  ref: 'Turno'
 //}]
 
-const Profesional = model('Veterinarian', VeterinarianSchema);
+module.exports = model('Veterinarian', VeterinarianSchema);
