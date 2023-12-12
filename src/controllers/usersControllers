@@ -46,9 +46,21 @@ const deleteUser = async (req, res) => {
   }
 }
 
+const loginUser = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    console.log(user);
+    res.status(200).json({ message: 'Usuario autenticado exitosamente', user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Error al autenticar el usuario');
+  }
+}
+
 module.exports = {
   getUsers,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  loginUser
 }

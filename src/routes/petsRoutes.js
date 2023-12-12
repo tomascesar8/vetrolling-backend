@@ -1,10 +1,10 @@
 import { Router } from 'express';
 // import PetModel from '../models/PetModel';
-import { createPet, getPet } from '../controllers/petsControllers';
+import { createPet, getPets } from '../controllers/petsControllers';
 
 const router = Router();
 
-router.get('/', getPet)
+router.get('/', getPets)
 
 router.post('/', createPet)
 

@@ -32,32 +32,12 @@ const UserSchema = new Schema({
   pets: {
     type: [Schema.Types.ObjectId],
     ref: 'Pet'
-  },
+  }
 });
 
 module.exports = model('User', UserSchema);
 
-//   turnos: [{
-//     type: Schema.Types.ObjectId, //? asi o "moongoose.Schema.Types.ObjectId" ?
-//     ref: 'Turno'
-//   }]
-
-//algo asi sería el route y controller:
-// app.post('/users', (req, res) => {
-//   const { nombre, email, password, mascotaId } = req.body;
-
-//   const user = new User({
-//     nombre,
-//     email,
-//     password,
-//     mascota: mascotaId // Vincula el usuario con la mascota utilizando el identificador de la mascota
-//   });
-
-//   user.save()
-//     .then(() => {
-//       res.status(200).json({ message: 'Usuario creado exitosamente' });
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error: 'Error al crear el usuario' });
-//     });
-// });
+// turnos: {
+//   type: [Schema.Types.ObjectId],
+//   ref: 'Turno'
+// }

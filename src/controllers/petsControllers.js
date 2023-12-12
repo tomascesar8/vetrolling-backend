@@ -1,8 +1,15 @@
 // const Pet = require('../models/PetModel');
 const Pet = require('../models/PetModel');
-const getPet = async (req, res) => {
+const getPets = async (req, res) => {
   try {
-    const pets = await Pet.find();
+    const pets = await Pet.find().populate({
+      path: 'turnos',
+      select: 'fecha hora -_id',
+      populate: {
+        path: 'veterinarian',
+        select: 'nombre -_id'
+      }   
+    })
     res.status(200).json(pets);
   } catch (error) {
     console.error('An error occurred:', error);
@@ -27,6 +34,6 @@ const createPet = async (req, res) => {
 }
 
 module.exports = {
-  getPet,
+  getPets,
   createPet
 }

@@ -18,18 +18,19 @@ const PetSchema = new Schema({
     trim: true, 
     minlength: 3,
     maxlength: 20
+  },
+  petOwner:{
+    type: Schema.Types.ObjectId, 
+    ref: 'User' 
+  },
+  turnos: {
+    type: [Schema.Types.ObjectId],
+    ref: 'Turno'
   }
 }, 
   {
     timestamps: true,
     versionKey: false
 })
-
-// ,
-//   petOwner:{
-//     type: mongoose.Schema.Types.ObjectId, 
-//     ref: 'User' 
-//   },
-
 
 module.exports = model('Pet', PetSchema);
