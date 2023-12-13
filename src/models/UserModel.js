@@ -1,12 +1,5 @@
-//que es un schema? estructura que define cómo se organizará y almacenará la información en una base de datos
-
-//modelo proporciona una representación conceptual de cómo se relaciona y se accede a la información en la base de datos.
-
-//El schema proporciona una interfaz para trabajar con el modelo de datos, de forma similar a cómo una interfaz de usuario permite interactuar con un sistema.
-
-//EJEMPLO BIBLIOTECA:
-//el esquema se encargaría de la estructura general de la biblioteca y las reglas de organización de las secciones temáticas, mientras que el modelo de datos se utilizaría para seleccionar los libros específicos que se colocarían en cada sección en función de su información y características.
 const { Schema, model } = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const UserSchema = new Schema({
   nombre: {
@@ -14,26 +7,31 @@ const UserSchema = new Schema({
     trim: true,
     minlength: 3,
     maxlength: 50,
-    required: true,
+    required: true
   },
   email: {
     type: String,
     trim: true,
     lowercase: true,
-    required: true, // Add the required property
+    required: true,
+    unique: true
   },
   password: {
     type: String,
     required: true, // Add the required property
     minlength: 3,
-    maxlength: 50,
-    trim: true,
+    maxlength: 60,
+    trim: true
   },
   pets: {
     type: [Schema.Types.ObjectId],
     ref: 'Pet'
   }
 });
+
+UserSchema.plugin(uniqueValidator,{
+  message: '{PATH} debe ser unico'
+})
 
 module.exports = model('User', UserSchema);
 

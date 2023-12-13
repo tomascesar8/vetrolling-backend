@@ -8,4 +8,4 @@ router.post('/', createTurno);
 router.put('/', updateTurno);
 router.delete('/', deleteTurno);
 
-module.exports = router
+module.exports = router;

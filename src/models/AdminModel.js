@@ -1,31 +1,30 @@
 const { Schema, model } = require('mongoose');
 
 const AdminSchema = new Schema({
+  nombre: {
+    type: String,
+    trim: true,
+    minlength: 3,
+    maxlength: 50,
+    required: true,
+  },
   email: {
     type: String,
     trim: true,
     lowercase: true,
-    required: true
+    required: true,
+    unique: true,
   },
   password: {
     type: String,
-    required: true // Add the required property
+    required: true,
+    trim: true,
+    minlength: 6,
+    maxlength: 20,
   }
   },{
   timestamps: true,
   }
 );
-
-// ,
-//   role: {
-//     type: String,
-//     enum: ['user', 'admin'],
-//     default: 'user',
-//   }
-// ,
-//   turnos: [{
-//     type: mongoose.Schema.Types.ObjectId, 
-//     ref: 'Turno' 
-//   }],
 
 module.exports = model('Admin', AdminSchema);

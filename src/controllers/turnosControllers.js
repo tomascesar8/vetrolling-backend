@@ -12,43 +12,23 @@ const getTurnos = async (req, res) => {
   }
 }
 
-// const createTurno = async (req, res) => {
-//   try {
-//     const turno = new Turno(req.body);
-//     console.log(turno);
-//     await turno.save();
-//     res.status(201).json({message: 'Turno creado exitosamente', turno});
-//   }catch (error) {
-//     console.error(error);
-//     res.status(500).json('Error al guardar el turno');
-//   }
-// }
 const createTurno = async (req, res) => {
   try {
-    // Extraer la información del cuerpo de la solicitud
     const turnoData = req.body;
-
-    // Crear el turno
     const turno = new Turno(turnoData);
-
-    // Guardar el turno en la base de datos
     await turno.save();
 
-    // Vincular el turno a la mascota
     await Pet.findByIdAndUpdate(
       turnoData.pet,
       { $push: { turnos: turno._id } },
-      { new: true }
+      { new: true } 
     );
-
     res.status(201).json({ message: 'Turno creado exitosamente', turno });
   } catch (error) {
     console.error(error);
     res.status(500).json('Error al guardar el turno');
   }
 }
-
-
 
 const updateTurno = async (req, res) => {
   try {

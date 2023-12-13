@@ -13,6 +13,7 @@ import commentsRoutes from './routes/commentsRoutes';
 import aboutUsRoutes from './routes/aboutUsRoutes';
 import veterinariansRoutes from './routes/veterinariansRoutes';
 import turnosRoutes from './routes/turnosRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 const app = express(); //para ver el servidor
 app.use(express.json());
@@ -31,7 +32,7 @@ app.set('PORT', process.env.PORT); //para ver el puerto
 app.use(morgan('dev')); //para ver por consola
 app.use(cors()); //para que todos puedan hacer peticiones
 app.use(express.json()); //para que todo lo que entre sea convetido a json
-// app.use(express.urlencoded({extended:true})) //apara aceptar pedidos urlencoded (en gral son raw)
+app.use(express.urlencoded({extended:true})) //apara aceptar pedidos urlencoded (en gral son raw)
 
 app.listen(app.get('PORT'), () => { //para ver el puerto
   console.log(`Conectado al puerto ${app.get('PORT')}`);
@@ -47,6 +48,7 @@ app.use('/comments', commentsRoutes)
 app.use('/about-us', aboutUsRoutes)
 app.use('/veterinarians', veterinariansRoutes)
 app.use('/turnos', turnosRoutes)
+app.use('/admins', adminRoutes)
 
 // app.use('/api/pets', petRoutes);
 // app.use('/api/appointments', appointmentRoutes);
