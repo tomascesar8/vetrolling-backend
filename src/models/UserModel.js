@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
 
 const UserSchema = new Schema({
   nombre: {
@@ -28,10 +27,6 @@ const UserSchema = new Schema({
     ref: 'Pet'
   }
 });
-
-UserSchema.plugin(uniqueValidator,{
-  message: '{PATH} debe ser unico'
-})
 
 module.exports = model('User', UserSchema);
 
