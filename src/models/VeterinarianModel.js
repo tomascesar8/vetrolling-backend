@@ -6,11 +6,5 @@ const VeterinarianSchema = new Schema({
   horario: String,
   imagen: String
 });
-  // Otros campos según sea necesario
-
-//turnos: [{
-//  type: Schema.Types.ObjectId, //? asi o "moongoose.Schema.Types.ObjectId" ?
-//  ref: 'Turno'
-//}]
 
 module.exports = model('Veterinarian', VeterinarianSchema);

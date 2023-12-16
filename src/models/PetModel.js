@@ -22,10 +22,6 @@ const PetSchema = new Schema({
   petOwner:{
     type: Schema.Types.ObjectId, 
     ref: 'User' 
-  },
-  turnos: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Turno'
   }
 }, 
   {
