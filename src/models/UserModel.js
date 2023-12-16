@@ -23,8 +23,17 @@ const UserSchema = new Schema({
     maxlength: 60,
     trim: true
   },
-  pets: {
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  turnos: {
     type: [Schema.Types.ObjectId],
+    ref: 'Turno'
+  },
+  pet: {
+    type: Schema.Types.ObjectId,
     ref: 'Pet'
   }
 });

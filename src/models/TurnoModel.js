@@ -7,9 +7,9 @@ const TurnoSchema = new Schema({
     type: String,
     trim: true,
   },
-  pet: { 
+  user: { 
     type: Schema.Types.ObjectId, 
-    ref: 'Pet' 
+    ref: 'User' 
   },
   veterinarian: {
     type: Schema.Types.ObjectId,
@@ -17,7 +17,12 @@ const TurnoSchema = new Schema({
   },
   fecha: Date,
   hora: String,
-});
+},
+  {
+    timestamps: true,
+    versionKey: false
+  }
+);
 
 //? turno al dueño o al la mascota?
 
