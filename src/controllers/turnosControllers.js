@@ -1,9 +1,14 @@
+const { Types } = require('mongoose');
+const ObjectId = Types.ObjectId;
+const { getUsuarios } = require('../controllers/usersControllers');
+const { getVeterinarians } = require('../controllers/veterinariansControllers');
+
 const Turno = require('../models/TurnoModel');
 const User = require('../models/UserModel');
 
 const getTurnos = async (req, res) => {
   try {
-    const turnos = await Turno.find().populate('veterinarian','-_id -imagen').populate({
+    const turnos = await Turno.find().populate('veterinarian', '-_id -imagen').populate({
       path: 'user',
       select: 'nombre -_id',
       populate: {
@@ -12,11 +17,22 @@ const getTurnos = async (req, res) => {
       }
     });
     res.status(200).json(turnos);
-  } catch(error) {
+  } catch (error) {
     console.log(error);
     res.status(500).json('Error al buscar turnos');
   }
 }
+
+const getTurno = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const turno = await Turno.findById(id).populate('user', 'nombre').populate('veterinarian', '-_id -imagen');
+    res.status(200).json({ turno });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('Error al buscar el turno');
+  }
+};
 
 const createTurno = async (req, res) => {
   try {
@@ -38,14 +54,20 @@ const createTurno = async (req, res) => {
 
 const updateTurno = async (req, res) => {
   try {
-    const { id } = req.params;
-    const turno = await Turno.findByIdAndUpdate(id, req.body, { new: true });
-    res.status(200).json({ message: 'Turno actualizado exitosamente', turno });
+    const { _id, ...data } = req.body;
+
+    await Turno.findOneAndUpdate({ _id: ObjectId(_id) }, { $set: data }, { new: true });
+
+    // Obtén la lista de usuarios y veterinarios
+    const usuarios = await getUsuarios();
+    const veterinarios = await getVeterinarians();
+
+    res.render('editarTurno', { usuarios, veterinarios, /* otras variables necesarias */ });
   } catch (error) {
     console.error(error);
-    res.status(500).json('Error al actualizar el turno');
+    res.status(500).json({ error: 'Error al actualizar el turno' });
   }
-}
+};
 
 const deleteTurno = async (req, res) => {
   try {
@@ -67,7 +89,8 @@ const deleteTurno = async (req, res) => {
 
 module.exports = {
   getTurnos,
+  getTurno,
   createTurno,
   updateTurno,
   deleteTurno
-}
+};

@@ -11,5 +11,4 @@ router.delete('/:id', checkToken, deleteUser);
 router.post('/login', loginUser);
 router.get('/auth', checkToken, getAuthUser);
 
-
 export default router;

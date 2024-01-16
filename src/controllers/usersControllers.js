@@ -21,7 +21,6 @@ const createUser = async (req, res) => {
     }
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
-    console.log(newUser);
     await newUser.save();
     res.status(201).json({ ok: true, message: 'Usuario creado exitosamente', newUser });
   } catch (error) {
@@ -32,9 +31,8 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { id } = req.params; // Cambiado de req.body a req.params
+    const { id } = req.params;
     const user = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
-    console.log(user);
     res.status(200).json({ ok: true, message: 'Usuario actualizado exitosamente', user });
   } catch (error) {
     console.error(error);
@@ -44,9 +42,8 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params; // Cambiado de req.body._id a req.params.id
+    const { id } = req.params;
     const user = await User.findByIdAndDelete(id);
-    console.log(user);
     res.status(200).json({ ok: true, message: 'Usuario eliminado exitosamente', user });
   } catch (error) {
     console.error(error);
@@ -56,7 +53,6 @@ const deleteUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    console.log(req.headers);
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -70,8 +66,7 @@ const loginUser = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET_KEY);
-    console.log(token);
-    res.status(200).json({ ok: true, message: 'WEWEWEWEWEWE', token, user });
+    res.status(200).json({ ok: true, message: 'Usuario autenticado exitosamente', token, user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ ok: false, message: 'Error al autenticar el usuario' });
@@ -82,10 +77,10 @@ const getAuthUser = async (req, res) => {
   try {
     const user = await User.findById(req.id);
     if (!user) {
-      res.status(400).json({ ok: false, message: "Usuario no encontrado" });
+      res.status(404).json({ ok: false, message: "Usuario no encontrado" });
       return;
     }
-    res.status(200).json({ ok: true, message: "Usuario WEA", user });
+    res.status(200).json({ ok: true, message: "Usuario encontrado", user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ ok: false, message: "Error al obtener el usuario autenticado" });
