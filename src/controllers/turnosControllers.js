@@ -1,14 +1,14 @@
 const { Types } = require('mongoose');
 const ObjectId = Types.ObjectId;
-const { getUsuarios } = require('../controllers/usersControllers');
-const { getVeterinarians } = require('../controllers/veterinariansControllers');
+// const { getUsers } = require('../controllers/usersControllers');
+// const { getVeterinarians } = require('../controllers/veterinariansControllers');
 
 const Turno = require('../models/TurnoModel');
 const User = require('../models/UserModel');
 
 const getTurnos = async (req, res) => {
   try {
-    const turnos = await Turno.find().populate('veterinarian', '-_id -imagen').populate({
+    const turnos = await Turno.find().populate('veterinarian', '-imagen').populate({
       path: 'user',
       select: 'nombre -_id',
       populate: {
@@ -23,16 +23,39 @@ const getTurnos = async (req, res) => {
   }
 }
 
+// const getTurno = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const turno = await Turno.findById(id).populate('user', 'nombre').populate('veterinarian', '-imagen');
+//     res.status(200).json({ turno });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json('Error al buscar el turno');
+//   }
+// };
+
 const getTurno = async (req, res) => {
   try {
     const { id } = req.params;
-    const turno = await Turno.findById(id).populate('user', 'nombre').populate('veterinarian', '-_id -imagen');
+    const turno = await Turno
+      .findById(id)
+      .populate({
+        path: 'user',
+        select: 'nombre',
+        populate: {
+          path: 'pet',
+          select: 'nombre'
+        }
+      })
+      .populate('veterinarian', '-imagen');
+
     res.status(200).json({ turno });
   } catch (error) {
     console.log(error);
     res.status(500).json('Error al buscar el turno');
   }
 };
+
 
 const createTurno = async (req, res) => {
   try {
@@ -53,19 +76,19 @@ const createTurno = async (req, res) => {
 }
 
 const updateTurno = async (req, res) => {
+  // console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++',req.body);
+  const token = req.header('x-auth-token')
+  console.log(token)
   try {
     const { _id, ...data } = req.body;
+    console.log('----------------------------------------------------------------------------------------------------------',req.body);
+    // await Turno.findOneAndUpdate({ _id: ObjectId(_id) }, { $set: data }, { new: true });
+    await Turno.findOneAndUpdate({ _id: new ObjectId(_id) }, { $set: data }, { new: true });
 
-    await Turno.findOneAndUpdate({ _id: ObjectId(_id) }, { $set: data }, { new: true });
-
-    // Obtén la lista de usuarios y veterinarios
-    const usuarios = await getUsuarios();
-    const veterinarios = await getVeterinarians();
-
-    res.render('editarTurno', { usuarios, veterinarios, /* otras variables necesarias */ });
+    res.status(201).json({ message: 'Turno actualizado exitosamente' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al actualizar el turno' });
+    res.status(500).json({ error: 'Error al actualizar el turno'}, req.body);
   }
 };
 

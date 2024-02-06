@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getUsers, createUser, updateUser, deleteUser, loginUser, getAuthUser } = require('../controllers/usersControllers');
+const { getUsers, createUser, updateUser, deleteUser, loginUser, getAuthUser, getUserById } = require('../controllers/usersControllers');
 const { checkToken } = require('../middlewares/auth');
 
 const router = Router();
@@ -10,5 +10,8 @@ router.put('/:id', checkToken, updateUser);
 router.delete('/:id', checkToken, deleteUser);
 router.post('/login', loginUser);
 router.get('/auth', checkToken, getAuthUser);
+
+// Nueva ruta para obtener un usuario por ID
+router.get('/:id', getUserById);
 
 export default router;

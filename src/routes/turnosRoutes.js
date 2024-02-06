@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { getTurnos, getTurno, createTurno, updateTurno, deleteTurno } = require('../controllers/turnosControllers');
-const { checkToken } = require('../middlewares/auth');
 
 const router = Router();
 
