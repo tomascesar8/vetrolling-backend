@@ -7,7 +7,7 @@ const TurnoSchema = new Schema({
   },
   user: { 
     type: Schema.Types.ObjectId, 
-    ref: 'User' 
+    ref: 'User'
   },
   veterinarian: {
     type: Schema.Types.ObjectId,
