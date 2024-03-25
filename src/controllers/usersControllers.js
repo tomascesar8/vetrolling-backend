@@ -18,7 +18,13 @@ const getUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id).populate("pet");
+    const user = await User.findById(id)
+      .populate("pet")
+      .populate({
+        path: "turnos",
+        populate: { path: "veterinarian" },
+        select: "-__v -password",
+      });
     if (!user) {
       res.status(404).json({ ok: false, message: "Usuario no encontrado" });
       return;

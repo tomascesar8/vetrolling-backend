@@ -23,17 +23,6 @@ const getTurnos = async (req, res) => {
   }
 }
 
-// const getTurno = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const turno = await Turno.findById(id).populate('user', 'nombre').populate('veterinarian', '-imagen');
-//     res.status(200).json({ turno });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json('Error al buscar el turno');
-//   }
-// };
-
 const getTurno = async (req, res) => {
   try {
     const { id } = req.params;
