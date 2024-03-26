@@ -39,6 +39,13 @@ const getUserById = async (req, res) => {
 const createUser = async (req, res) => {
   console.log(req.body);
   try {
+    // Verificar que no exista un usuario con el mismo email
+    const userWithSameEmail = await User.findOne({ email: req.body.email.toLowerCase() });
+    if (userWithSameEmail) {
+      res.status(400).json({ ok: false, message: 'El email ya ha sido registrado' });
+      return;
+    }
+
     // Crear la mascota y esperar a que se guarde
     const newPet = new Pet({
       nombre: req.body.pet.nombre,
@@ -51,7 +58,7 @@ const createUser = async (req, res) => {
     // Crear el usuario con la referencia al documento de mascota
     const newUser = new User({
       nombre: req.body.nombre,
-      email: req.body.email,
+      email: req.body.email.toLowerCase(),
       password: req.body.password,
       role: req.body.role,
       turnos: req.body.turnos,
