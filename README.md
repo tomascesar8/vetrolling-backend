@@ -39,7 +39,7 @@ VetRolling es una aplicación web diseñada para facilitar la gestión de una ve
   
 - Para iniciar el backend, ejecuta el siguiente comando en el directorio `vetrolling-backend`:
   ```
-  npm start
+  npm run server
   ```
   Esto iniciará el servidor backend en [http://localhost:5000](http://localhost:5000).
 
