@@ -11,7 +11,6 @@ const getPets = async (req, res) => {
 }
 
 const createPet = async (req, res) => {
-  console.log(req.body,'+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
   try {
     const newPet = new Pet({
       nombre: req.body.nombre,
@@ -19,11 +18,9 @@ const createPet = async (req, res) => {
       raza: req.body.raza,
     });
     const savedPet = await newPet.save();
-    console.log(savedPet, '--------------------------------------------------------------------------------------------------------------');
     res.status(201).json({ pet: savedPet, message: 'Mascota guardada correctamente' });
   } catch (error) {
-    console.
-    error(error);
+    console.error(error);
     res.status(500).json({ message: 'Error al guardar la mascota' });
   }
 }
@@ -31,7 +28,7 @@ const createPet = async (req, res) => {
 const updatePet = async (req, res) => {
   try {
     const petId = req.params.petId;
-    const updatedPet = await Pet.findByIdAndUpdate(
+    await Pet.findByIdAndUpdate(
       petId,
       {
         nombre: req.body.nombre,
@@ -62,5 +59,5 @@ module.exports = {
   getPets,
   createPet,
   updatePet,
-  deletePet, // Nueva función para eliminar mascotas
+  deletePet
 };

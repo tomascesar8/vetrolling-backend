@@ -10,8 +10,6 @@ router.put('/:id', checkToken, updateUser);
 router.delete('/:id', checkToken, deleteUser);
 router.post('/login', loginUser);
 router.get('/auth', checkToken, getAuthUser);
-
-// Nueva ruta para obtener un usuario por ID
 router.get('/:id', getUserById);
 
 export default router;

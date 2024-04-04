@@ -5,7 +5,7 @@ const getPlanes = async (req, res) => {
     const planes = await Plan.find()
     res.status(200).json(planes);
   } catch (error) {
-    console.log(error)
+    console.error(error)
     res.status(500).json('Error al buscar planes');
   }
 }

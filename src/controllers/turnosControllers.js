@@ -1,8 +1,5 @@
 const { Types } = require('mongoose');
 const ObjectId = Types.ObjectId;
-// const { getUsers } = require('../controllers/usersControllers');
-// const { getVeterinarians } = require('../controllers/veterinariansControllers');
-
 const Turno = require('../models/TurnoModel');
 const User = require('../models/UserModel');
 
@@ -18,7 +15,7 @@ const getTurnos = async (req, res) => {
     });
     res.status(200).json(turnos);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json('Error al buscar turnos');
   }
 }
@@ -40,18 +37,16 @@ const getTurno = async (req, res) => {
 
     res.status(200).json({ turno });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json('Error al buscar el turno');
   }
 };
-
 
 const createTurno = async (req, res) => {
   try {
     const turnoData = req.body;
     const turno = new Turno(turnoData);
     await turno.save();
-
     await User.findByIdAndUpdate(
       turnoData.user,
       { $push: { turnos: turno._id }},
@@ -65,19 +60,13 @@ const createTurno = async (req, res) => {
 }
 
 const updateTurno = async (req, res) => {
-  // console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++',req.body);
-  const token = req.header('x-auth-token')
-  console.log(token)
   try {
     const { _id, ...data } = req.body;
-    console.log('----------------------------------------------------------------------------------------------------------',req.body);
-    // await Turno.findOneAndUpdate({ _id: ObjectId(_id) }, { $set: data }, { new: true });
     await Turno.findOneAndUpdate({ _id: new ObjectId(_id) }, { $set: data }, { new: true });
-
     res.status(201).json({ message: 'Turno actualizado exitosamente' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al actualizar el turno'}, req.body);
+    res.status(500).json({ error: 'Error al actualizar el turno'});
   }
 };
 

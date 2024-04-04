@@ -5,7 +5,7 @@ const getServices = async (req, res) => {
     const services = await Service.find()
     res.status(200).json(services);
   } catch (error) {
-    console.log(error)
+    console.error(error)
     res.status(500).json('Error al buscar servicios');
   }
 }
