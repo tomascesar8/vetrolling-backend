@@ -6,6 +6,10 @@
 
 VetRolling es una aplicación web diseñada para facilitar la gestión de una veterinaria, ofreciendo una variedad de funciones y características para administrar usuarios, turnos, y más. Esta aplicación está destinada a veterinarios y personal administrativo que necesitan una herramienta eficiente para gestionar su negocio de manera efectiva.
 
+### A MODO ILUSTRATIVO SE PUEDE INGRESAR COMO ADMINISTRADOR para utilizar todas las funcionalidades: 
+Usuario: admin@example.com 
+Contraseña: Admin123#
+
 ### Tecnologías Utilizadas
 
 - **Frontend**: React con Vite, react-router-dom, react-bootstrap, bootstrap, react-icons, sweetalert2, emailjs.
